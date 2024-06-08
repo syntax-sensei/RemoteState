@@ -1,23 +1,25 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="style.css" />
-    
-  </head>
-  <body>
-    <script src="main.js" defer></script>
-    <div id="items"></div>
-    <template id="item-template">
-      <div class="item">
-        <input type="checkbox" class="item-completed" />
-        <input type="text" class="item-description" placeholder="Item...." />
-      </div>
-    </template>
 
-    <button id= "Add">Add Item</button>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="container">
+    <div class="todo">
+      <h2>Item Lists</h2>
+      <div class="row">
+        <input type="text" id="inputbox" placeholder="Task Item">
+        <button id="addtask">Add</button>
+      </div>
+      <ul id="list-container"></ul>
+    </div>
+  </div>
+  <script src="script.js"></script>
+</body>
+
 </html>
