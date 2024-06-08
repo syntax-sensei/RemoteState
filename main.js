@@ -1,4 +1,10 @@
-document.getElementById("addtask").addEventListener("click", addNewTask);
+function createButton(buttonText, buttonClass, onClick) {
+  const button = document.createElement("button");
+  button.className = buttonClass;
+  button.textContent = buttonText;
+  button.addEventListener("click", onClick);
+  return button;
+}
 
 function addNewTask() {
   const taskInput = document.getElementById("inputbox");
@@ -42,10 +48,4 @@ function addNewTask() {
   taskInput.value = "";
 }
 
-function createButton(buttonText, buttonClass, onClick) {
-  const button = document.createElement("button");
-  button.className = buttonClass;
-  button.textContent = buttonText;
-  button.addEventListener("click", onClick);
-  return button;
-}
+document.getElementById("addtask").addEventListener("click", addNewTask);
