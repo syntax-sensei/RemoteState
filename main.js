@@ -1,71 +1,51 @@
-const ITEMS_CONTAINER = document.getElementById("items");
-const ITEM_TEMPLATE = document.getElementById("item-template");
-const ADD_BUTTON = document.getElementById("Add");
+document.getElementById("addtask").addEventListener("click", addNewTask);
 
-let items = getItems();
+function addNewTask() {
+  const taskInput = document.getElementById("inputbox");
+  const taskText = taskInput.value.trim();
+  if (taskText === "") return;
 
-function getItems() {
-  const value = localStorage.getItem("todo") || "[]";
-    return JSON.parse(value);
+  const taskList = document.getElementById("list-container");
+  const taskItem = document.createElement("li");
+  taskItem.className = "item";
 
-}
+  const taskTextSpan = document.createElement("span");
+  taskTextSpan.className = "tasktext";
+  taskTextSpan.textContent = taskText;
 
-function setItems(items){
-    const itemsJson = JSON.stringify(items);
-    localStorage.setItem("todo", itemsJson);
-}
+  const taskButtons = document.createElement("div");
+  taskButtons.className = "buttons";
 
-function addItem(){
-    items.unshift({
-        description:"",
-        completed:false
-    });
+  const doneButton = createButton("Mark as Complete", "mac-button", () => {
+    taskItem.classList.toggle("completed");
+  });
 
-    setItems(items);
-    refreshlist();
-}
-
-function updateItem(item, key, value){
-    item[key] = value;
-    setItems(items);
-    refreshlist();
-
-}
-
-function refreshlist(){
-
-    
-
-    ITEMS_CONTAINER.innerHTML = "";
-
-    for(const item of items){
-        const itemElement = ITEM_TEMPLATE.content.cloneNode(true);
-        const descriptionInput = itemElement.querySelector(".item-description");
-        const completedInput = itemElement.querySelector(".item-completed");
-
-        descriptionInput.value = item.description;
-        completedInput.checked = item.completed;
-
-        descriptionInput.addEventListener("change", () => {
-            updateItem(item, "description", descriptionInput.checked);
-        });
-
-        completedInput.addEventListener("change", () => {
-            updateItem(item, "completed", completedInput.checked);
-        });
-
-        ITEMS_CONTAINER.append(itemElement);
-
+  const modifyButton = createButton("Edit", "modify-button", () => {
+    const newTaskText = prompt("Edit task:", taskTextSpan.textContent);
+    if (newTaskText !== null) {
+      taskTextSpan.textContent = newTaskText.trim();
     }
+  });
 
+  const removeButton = createButton("Delete", "remove-button", () => {
+    taskList.removeChild(taskItem);
+  });
+
+  taskButtons.appendChild(doneButton);
+  taskButtons.appendChild(modifyButton);
+  taskButtons.appendChild(removeButton);
+
+  taskItem.appendChild(taskTextSpan);
+  taskItem.appendChild(taskButtons);
+  taskList.appendChild(taskItem);
+
+  taskInput.value = "";
 }
 
-ADD_BUTTON.addEventListener = ("click", () => {
-    addItem();
-});
-
-refreshlist();
-
-
-
-
+function createButton(buttonText, buttonClass, onClick) {
+  const button = document.createElement("button");
+  button.className = buttonClass;
+  button.textContent = buttonText;
+  button.addEventListener("click", onClick);
+  return button;
+}
